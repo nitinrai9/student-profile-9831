@@ -37,28 +37,43 @@ class MyComponent extends React.Component {
   render() {
     const { error, isLoaded, items } = this.state;
     const itemArray = items.students;
-    // const avg = itemArray.grades.reduce((sum, curr) => sum + Number(curr), 0) / itemArray.grades.length;
-    // console.log(items);
+   
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <ul>
+       
+        <div>
+
+
           {itemArray.map((item) => (
-            <li key={item.id}>
-              <img src={item.pic} />
-              {item.firstName} {item.lastName}
-              Email {item.email}
-              Company {item.company}
-              Skill {item.skill}
+            
+            <div class="row add-pad">
+              {/* <li key={item.id}> */}
+              <div class="col-2 col-sm-2 col-md-2 col-lg-2 profile-image">
+                <img src={item.pic} class="image-height" />
+              </div>
+                  <div class=" col-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="row"><div class="col-md-12"><h1 class="profile-name">{item.firstName} {item.lastName} </h1></div></div>
+                    <div class="row indent-row"><div class="col-md-12">Email {item.email} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Company {item.company} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Skill {item.skill} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Average {item.grades.reduce((sum, curr) => sum + Number(curr), 0) / item.grades.length}%</div></div>
+                  </div>
+              {/* </li> */}
               
-              Average {item.grades.reduce((sum, curr) => sum + Number(curr), 0) / item.grades.length}
-    
-            </li>
+            </div>
+            
+            
           ))}
-        </ul>
+              
+
+        </div>
+        
+      
       );
     }
   }
