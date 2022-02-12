@@ -99,7 +99,7 @@ body {
   margin-top: 5%;
   margin-bottom: 5%;
   background-color: white;
-  height:500px;
+  height:600px;
   border-style: outset;
   border-radius: 10px;
   overflow: scroll;
@@ -114,6 +114,34 @@ body {
 .contain-width {
 -ms-overflow-style: none;  /* IE and Edge */
 scrollbar-width: none;  /* Firefox */
+}
+
+.filter-content
+{
+  outline: none;
+  border-width: 0 0 2px;
+  border-color: lightgray;
+  border-radius: 0px;
+  box-shadow: none !important;
+  height: 40px !important;
+}
+
+.filter-content:focus
+{
+  outline: none !important;
+  border-width: 0 0 2px !important;
+  border-color: black !important;
+  box-shadow: none !important;
+}
+
+.textbox-pad
+{
+  padding-top: 10px;
+}
+
+.form-group 
+{
+  margin-bottom: 0px !important;
 }
 
 .body-background

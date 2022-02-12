@@ -7,10 +7,18 @@ class MyComponent extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
+      value: ''
     };
-   
+    this.handleChange = this.handleChange.bind(this);
   }
+
+ 
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  
+  }
+
 
   componentDidMount() {
     fetch("https://api.hatchways.io/assessment/students")
@@ -35,7 +43,7 @@ class MyComponent extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, items } = this.state;
+    const { error, isLoaded, items,value} = this.state;
     const itemArray = items.students;
    
 
@@ -43,16 +51,26 @@ class MyComponent extends React.Component {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
-    } else {
+    } else if(this.state.value!='') {
       return (
-       
+ 
         <div>
 
-
-          {itemArray.map((item) => (
+            <div class="row textbox-pad">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by name" value={this.state.value} onChange={this.handleChange} ></input>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {
+              
+              itemArray.filter(item => (item.firstName+item.lastName).toLowerCase().includes(this.state.value)).map((item) => (
             
             <div class="row add-pad">
-              {/* <li key={item.id}> */}
+              
               <div class="col-2 col-sm-2 col-md-2 col-lg-2 profile-image">
                 <img src={item.pic} class="image-height" />
               </div>
@@ -76,6 +94,50 @@ class MyComponent extends React.Component {
       
       );
     }
+    else{
+      return (
+       
+        <div>
+
+            <div class="row textbox-pad">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by name" value={this.state.value} onChange={this.handleChange} ></input>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {
+              
+              itemArray.map((item) => (
+            
+            <div class="row add-pad">
+              {console.log(value)}
+              <div class="col-2 col-sm-2 col-md-2 col-lg-2 profile-image">
+                <img src={item.pic} class="image-height" />
+              </div>
+                  <div class=" col-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="row"><div class="col-md-12"><h1 class="profile-name">{item.firstName} {item.lastName} </h1></div></div>
+                    <div class="row indent-row"><div class="col-md-12">Email {item.email} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Company {item.company} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Skill {item.skill} </div></div>
+                    <div class="row indent-row"><div class="col-md-12">Average {item.grades.reduce((sum, curr) => sum + Number(curr), 0) / item.grades.length}%</div></div>
+                  </div>
+              {/* </li> */}
+              
+            </div>
+            
+            
+          ))}
+              
+
+        </div>
+        
+      
+      );
+    }
+  
   }
 }
 
