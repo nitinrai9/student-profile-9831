@@ -140,6 +140,27 @@ scrollbar-width: none;  /* Firefox */
   box-shadow: none !important;
 }
 
+.add-tag
+{
+  outline: none;
+  border-width: 0 0 2px;
+  border-color: lightgray;
+  border-radius: 0px;
+  width: 50%;
+  box-shadow: none !important;
+  height: 40px !important;
+}
+
+.add-tag:focus
+{
+  outline: none !important;
+  border-width: 0 0 2px !important;
+  border-color: black !important;
+  box-shadow: none !important;
+}
+
+
+
 .textbox-pad
 {
   padding-top: 10px;
