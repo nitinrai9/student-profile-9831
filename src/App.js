@@ -208,30 +208,33 @@ class MyComponent extends React.Component {
                           ))}
 
                       </div></div>
-                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        
-                            <div class="form-group">
-                                  <input type="text" class="add-tag form-control" name="addTagInput" id={item.id} aria-describedby="" placeholder="Add a tag"  onKeyDown={this.inputKeyDown} ></input>
-                            </div>
-                        
-                    </div>
+
+                          <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                              
+                                  <div class="form-group">
+                                        <input type="text" class="add-tag" name="addTagInput" id={item.id} aria-describedby="" placeholder="Add a tag"  onKeyDown={this.inputKeyDown} ></input>
+                                  </div>
+                              
+                          </div>
                   </div>
                     
-                    <div class="row indent-row"> 
-                        <div id={item.id} class="col-md-12 collapse">
-                                  <ul class="grades-css">
-                                    {item.grades.map(grade => 
-                                  
-                                        <li>Test {i=i+1} &nbsp;&nbsp;&nbsp;&nbsp;{grade}%</li>)}
-                                        <p hidden>{i=0}</p> 
-                                  </ul>
-                        </div>
-                    </div>
-                  </div>
+                      <div class="row indent-row"> 
+                                  <div id={"id"+item.id} class="col-md-12 collapse">
+                                            <ul class="grades-css">
+                                              {item.grades.map(grade => 
+                                            
+                                                  <li>Test {i=i+1} &nbsp;&nbsp;&nbsp;&nbsp;{grade}%</li>)}
+                                                  <p hidden>{i=0}</p> 
+                                            </ul>
+                                  </div>
+                      </div>
+
+                </div>
+                  
                   <div class="col-2 col-sm-2 col-md-2 col-lg-2">
                     <div class="row">
                       <div class="col-12 col-sm-12 col-md-12 col-lg-12"> 
-                          <button type="button" class="glyphicon glyphicon-plus plus-button" data-toggle="collapse" data-target={"#"+item.id}></button>
+                          <button type="button" class="glyphicon glyphicon-plus plus-button" data-toggle="collapse" data-target={"#id"+item.id}></button>
                       </div>
                     </div>
                   </div>
