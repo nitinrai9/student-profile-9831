@@ -13,10 +13,12 @@ class MyComponent extends React.Component {
       items: [],
       tags:  [],
       value: '',
+      tagSearch:'',
       textValue:'',
       rowId:''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
     
   }
 
@@ -48,9 +50,14 @@ class MyComponent extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    
   
   }
 
+  handleTagChange(ev) {
+    this.setState({tagSearch: ev.target.tagSearch});
+    console.log(ev.target.tagSearch);
+  }
 
  
 
@@ -81,7 +88,7 @@ class MyComponent extends React.Component {
  
 
   render() {
-    const { error, isLoaded, items, value} = this.state;
+    const { error, isLoaded, items, value, tagSearch} = this.state;
     var i = 0;
     const itemArray = items.students;
     var rowCount=0;
@@ -95,7 +102,7 @@ class MyComponent extends React.Component {
       return <div>Loading...</div>;
     } else if(this.state.value!='') {
       return (
-        
+                                      /*  When the user enters search by namr or tag, below code is executed */
         <div>
 
             <div class="row textbox-pad">
@@ -103,6 +110,16 @@ class MyComponent extends React.Component {
                 <form>
                   <div class="form-group">
                     <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by name" value={this.state.value} onChange={this.handleChange} ></input>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="row textbox-pad">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by Tag" value={this.state.tagSearch} onChange={this.handleTagChange} ></input>
                   </div>
                 </form>
               </div>
@@ -139,7 +156,7 @@ class MyComponent extends React.Component {
     else{
       return (
                 
-                 
+                 /*  Code to display regular list when there is no search entered */
                 
         <div>
 
@@ -157,7 +174,7 @@ class MyComponent extends React.Component {
               <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <form>
                   <div class="form-group">
-                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by Tag"  ></input>
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by Tag" value={this.state.tagSearch} onChange={this.handleTagChange} ></input>
                   </div>
                 </form>
               </div>
