@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, setState } from "react";
+import ReactDOM from "react-dom";
 import './App.css';
 
 
@@ -10,15 +11,52 @@ class MyComponent extends React.Component {
       error: null,
       isLoaded: false,
       items: [],
-      value: ''
+      tags:  [],
+      value: '',
+      tagSearch:'',
+      textValue:'',
+      rowId:''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
+    
   }
 
  
+    inputKeyDown = (e) => {
+      const val = e.target.value;
+      const itemId = e.target.id;
+      
+      
+      if (e.key === "Enter" && val !== "") {
+        
+        // Check if tag already exists
+         if (this.state.tags.find(tag => tag.valu.toLowerCase() === val.toLowerCase())) {
+           return;
+         }
+        
+        this.setState({ tags: [...this.state.tags, 
+          { 
+            id:itemId, valu: val
+          }
+            ]
+          });
+        // this.setTags({ tags: [...this.state.tags, val]});
+        // this.tagInput.value = null;
+         e.target.value="";
+        }
+        console.log(this.state.tags);
+    }
+
   handleChange(event) {
     this.setState({value: event.target.value});
+    
   
+  }
+
+  handleTagChange(ev) {
+    this.setState({tagSearch: ev.target.tagSearch});
+    console.log(ev.target.tagSearch);
   }
 
  
@@ -46,11 +84,17 @@ class MyComponent extends React.Component {
       )
   }
 
+
+ 
+
   render() {
-    const { error, isLoaded, items,value} = this.state;
+    const { error, isLoaded, items, value, tagSearch} = this.state;
     var i = 0;
     const itemArray = items.students;
     var rowCount=0;
+
+  
+  
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -58,7 +102,7 @@ class MyComponent extends React.Component {
       return <div>Loading...</div>;
     } else if(this.state.value!='') {
       return (
-        
+                                      /*  When the user enters search by namr or tag, below code is executed */
         <div>
 
             <div class="row textbox-pad">
@@ -66,6 +110,16 @@ class MyComponent extends React.Component {
                 <form>
                   <div class="form-group">
                     <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by name" value={this.state.value} onChange={this.handleChange} ></input>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="row textbox-pad">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by Tag" value={this.state.tagSearch} onChange={this.handleTagChange} ></input>
                   </div>
                 </form>
               </div>
@@ -101,7 +155,9 @@ class MyComponent extends React.Component {
     }
     else{
       return (
-          
+                
+                 /*  Code to display regular list when there is no search entered */
+                
         <div>
 
             <div class="row textbox-pad">
@@ -113,7 +169,19 @@ class MyComponent extends React.Component {
                 </form>
               </div>
             </div>
+
+            <div class="row textbox-pad">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="filter-content form-control" name="textInput" id="textinput" aria-describedby="" placeholder="Search by Tag" value={this.state.tagSearch} onChange={this.handleTagChange} ></input>
+                  </div>
+                </form>
+              </div>
+            </div>
           {
+
+                
               
               itemArray.map((item) => (
             
@@ -123,11 +191,32 @@ class MyComponent extends React.Component {
                 <img src={item.pic} class="image-height" />
               </div>
                   <div class=" col-8 col-sm-8 col-md-8 col-lg-8">
-                    <div class="row"><div class="col-md-12"><h1 class="profile-name">{item.firstName} {item.lastName} </h1></div></div>
-                    <div class="row indent-row"><div class="col-md-12">Email: {item.email} </div></div>
-                    <div class="row indent-row"><div class="col-md-12">Company: {item.company} </div></div>
-                    <div class="row indent-row"><div class="col-md-12">Skill: {item.skill} </div></div>
-                    <div class="row indent-row"><div class="col-md-12">Average: {item.grades.reduce((sum, curr) => sum + Number(curr), 0) / item.grades.length}%</div></div>
+                    <div class="row"><div class="col-12 col-sm-12 col-md-12 col-lg-12"><h1 class="profile-name">{item.firstName} {item.lastName} </h1></div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">Email: {item.email} </div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">Company: {item.company} </div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">Skill: {item.skill} </div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">Average: {item.grades.reduce((sum, curr) => sum + Number(curr), 0) / item.grades.length}%</div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    
+                    { this.state.tags.map((tag, i) => (
+                           
+                            <div>
+                              {item.id==tag.id?tag.valu:''}
+                              
+                            </div>
+                            
+                          ))}
+
+                      </div></div>
+                    <div class="row indent-row"><div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        
+                            <div class="form-group">
+                                  <input type="text" class="add-tag form-control" name="addTagInput" id={item.id} aria-describedby="" placeholder="Add a tag"  onKeyDown={this.inputKeyDown} ></input>
+                            </div>
+                        
+                    </div>
+                  </div>
+                    
                     <div class="row indent-row"> 
                         <div id={item.id} class="col-md-12 collapse">
                                   <ul class="grades-css">
